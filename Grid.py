@@ -20,23 +20,25 @@ class Grid:
         return self.__board
 
     def show_board(self):
-        # for(i, j) in enumerate(self.__board):
-        #     print(j);
-
         for i in range(self.rows-1,-1,-1):
             print(self.board[i])
+
+    def reset(self):
+        self.__board =[[0 for x in range(self.columns)] for y in range(self.rows)]
 
     def add_disc(self, column, player):
         lastLocation = [-1, -1];
         #find empty row in column
+        if(column<0 or column>=self.columns):
+            raise Exception("Invalid column")
         for row in range(self.rows):
             if (self.__board[row][column] == 0):
                 self.__board[row][column] = player.playerSignature
                 lastLocation = [row, column];
+                self.show_board()
                 return lastLocation
 
-        return lastLocation
-
+        raise Exception("Invalid column")
     def has_player_won(self, player, lastLocation, winingScore):
         if lastLocation==[-1,-1]:
             return False
@@ -90,7 +92,7 @@ class Grid:
         leftScoreCounter = 0
         rightScoreCounter = 0
 
-        for i in range(lastColumn):
+        for i in range(lastColumn+1):
             leftColumn = lastColumn - i
             if leftColumn >= 0:
                 if self.board[lastRow][leftColumn] == player.playerSignature:
@@ -110,20 +112,28 @@ class Grid:
         return False
 
 if __name__ == "__main__":
-    grid = Grid(3, 4)
+    grid = Grid(4, 4)
     lastlocation= grid.add_disc(0,Player.RED)
     print(grid.show_board())
-    print(f"Did player win {grid.has_player_won(Player.RED, lastlocation, 4)}")
 
-    lastlocation=grid.add_disc(0, Player.RED)
+    lastlocation=grid.add_disc(1, Player.RED)
+    lastlocation = grid.add_disc(1, Player.RED)
     print(grid.show_board())
-    print(f"Did player win {grid.has_player_won(Player.RED, lastlocation, 4)}")
 
-    lastlocation=grid.add_disc(0, Player.RED)
+    lastlocation=grid.add_disc(2, Player.RED)
+    lastlocation=grid.add_disc(2, Player.RED)
+    lastlocation=grid.add_disc(2, Player.RED)
+
     print(grid.show_board())
-    print(f"Did player win {grid.has_player_won(Player.RED, lastlocation, 4)}")
 
-    lastlocation=grid.add_disc(0, Player.RED)
+    lastlocation=grid.add_disc(3, Player.RED)
+    lastlocation=grid.add_disc(3, Player.RED)
+
+    lastlocation=grid.add_disc(3, Player.RED)
+
+    lastlocation=grid.add_disc(3, Player.RED)
+
+
 
     print(grid.show_board())
     print(f"Did player win {grid.has_player_won(Player.RED, lastlocation, 4)}")
