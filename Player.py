@@ -6,13 +6,13 @@ class Player(Enum):
     YELLOW=("Y",Disc.GREEN)
 
     def __init__(self,PlayerSignature,Disc):
-        self.__PlayerSignature=PlayerSignature
-        self.__Disc=Disc
+        self.__playerSignature=PlayerSignature
+        self.__disc=Disc
 
     @property
     def disc(self):
-        return self.__Disc
+        return self.__disc
 
     @property
     def playerSignature(self):
-        return self.__PlayerSignature
+        return self.__playerSignature
