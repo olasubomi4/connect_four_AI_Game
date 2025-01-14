@@ -20,8 +20,10 @@ class Grid:
         return self.__board
 
     def show_board(self):
+        print("***************")
         for i in range(self.rows-1,-1,-1):
             print(self.board[i])
+
 
     def reset(self):
         self.__board =[[0 for x in range(self.columns)] for y in range(self.rows)]
@@ -38,7 +40,21 @@ class Grid:
                 self.show_board()
                 return lastLocation
 
-        raise Exception("Invalid column")
+        raise Exception("Invalid row")
+
+    def is_disc_placed_at_invalid_column(self, column):
+        if (column < 0 or column >= self.columns):
+            return True;
+
+        return False;
+
+    def is_disc_placed_at_invalid_row(self, column):
+        for row in range(self.rows):
+            if (self.__board[row][column] == 0):
+                return False;
+        return True;
+
+
     def has_player_won(self, player, lastLocation, winingScore):
         if lastLocation==[-1,-1]:
             return False
@@ -93,21 +109,23 @@ class Grid:
         rightScoreCounter = 0
 
         for i in range(lastColumn+1):
-            leftColumn = lastColumn - i
+            leftColumn = i
             if leftColumn >= 0:
                 if self.board[lastRow][leftColumn] == player.playerSignature:
                     leftScoreCounter = leftScoreCounter + 1
                 else:
                     leftScoreCounter = 0
-
-            rightColumn = lastColumn + i
-            if rightColumn < self.columns:
-                if self.board[lastRow][rightColumn] == player.playerSignature:
-                    rightScoreCounter = rightScoreCounter + 1
-                else:
-                    rightScoreCounter = 0
-            if leftScoreCounter == winingScore or rightScoreCounter == winingScore:
+            if leftScoreCounter == winingScore:
                 return True;
+
+            # rightColumn = lastColumn + i
+            # if rightColumn < self.columns:
+            #     if self.board[lastRow][rightColumn] == player.playerSignature:
+            #         rightScoreCounter = rightScoreCounter + 1
+            #     else:
+            #         rightScoreCounter = 0
+            # if leftScoreCounter == winingScore or rightScoreCounter == winingScore:
+            #     return True;
 
         return False
 
